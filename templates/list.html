@@ -1,11 +1,27 @@
 <!doctype html>
 <title>Path: {{ tree.name }}</title>
+<script>
+    function myFunction(target) {
+        /* Get the text field */
+        var copyText = document.getElementById(target);
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
 <h1>{{ tree.name }}</h1>
 <ul>
-{%- for item in tree.children recursive %}
-    <li>{{ item.name }}
-    {%- if item.children -%}
-        <ul>{{ loop(item.children) }}</ul>
-    {%- endif %}</li>
-{%- endfor %}
+    {%- for item in tree.children recursive %}
+        <li>
+        <a href="{{ item.href }}"> {{ item.name }} </a>
+        <input type="text" value="<a href={{ item.href }}>" id="{{ item.name }}">
+        <button onclick="myFunction({{ item.name }})">Copy text</button>
+    {%- endfor %}
 </ul>
