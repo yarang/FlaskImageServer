@@ -1,7 +1,15 @@
+import json
+
 from flask import Flask, render_template, request
 import os
 
 app = Flask(__name__)
+
+
+with open('config.json') as f:
+    config = json.load(f)
+    img_hostname = config['image_host']
+    server_hostname = config['server_host']
 
 
 def make_tree(path, args_path):
@@ -15,13 +23,13 @@ def make_tree(path, args_path):
         for name in lst:
             fn = os.path.join(path, name)
             if os.path.isdir(fn):
-                hostname="http://oci2.fcoinfup.pw:5555/"
+                hostname=server_hostname
                 href = hostname + os.path.join(args_path, name)
                 tree['children'].append(dict(name=name, href=href, full=fn, dir=True))
             else:
-                hostname="http://img1.thisismyreview.com/"
+                hostname=img_hostname
                 href = hostname + os.path.join(args_path, name)
-                tree['children'].append(dict(name=name, href=href, full=fn))
+                tree['children'].append(dict(name=name, href=href, full=fn, dir=False))
     return tree
 
 

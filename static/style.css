@@ -1,0 +1,34 @@
+.liner {
+    width: 1000px;
+    height: 300px;
+    margin: 10px auto;
+}
+
+.cell {
+    border: 1px solid black;
+    float: left;
+    width: 200px;
+    height: 300px;
+    box-sizing: border-box;
+}
+
+.endcell {
+    border: 1px solid black;
+    float: right;
+    width: 200px;
+    height: 300px;
+    box-sizing: border-box;
+}
+
+img {
+    border: 1px solid #ddd; /* Gray border */
+    border-radius: 4px;  /* Rounded border */
+    padding: 5px; /* Some padding */
+    width: 150px; /* Set a small width */
+    height: 150px;
+    object-fit: cover;
+}
+
+.in_text {
+    width: 30px;
+}

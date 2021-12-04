@@ -1,27 +1,64 @@
 <!doctype html>
-<title>Path: {{ tree.name }}</title>
-<script>
-    function myFunction(target) {
-        /* Get the text field */
-        var copyText = document.getElementById(target);
+<html lang="end">
+<head>
+    <title>Path: {{ tree.name }}</title>
+    <script>
+        function myFunction(target) {
+            /* Get the text field */
+            var copyText = document.getElementById(target);
 
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
 
-        /* Copy the text inside the text field */
-        document.execCommand("copy");
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
 
-        /* Alert the copied text */
-        alert("Copied the text: " + copyText.value);
-    }
-</script>
+            /* Alert the copied text */
+            alert("Copied the text: " + copyText.value);
+        }
+    </script>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
 <h1>{{ tree.name }}</h1>
-<ul>
-    {%- for item in tree.children recursive %}
-        <li>
-        <a href="{{ item.href }}"> {{ item.name }} </a>
-        <input type="text" value="<a href='{{ item.href }}'>" id="{{ item.name }}">
-        <button onclick="myFunction('{{ item.name }}')">Copy text</button>
-    {%- endfor %}
-</ul>
+{%- for item in tree.children %}
+    {% if loop.index % 5 == 1 %}
+        <div class="liner">
+            <div class="cell">
+                {% if item.dir == True %}
+                <a href="{{ item.href }}"> {{ item.name }}" </a><br>
+                {% else %}
+                {{ item.name }}
+                <a href="{{ item.href }}"> <img src="{{ item.href }}" alt="{{ item.name }}"> </a><br>
+                {% endif %}
+                <input class="in_text" type="text" value="<a href='{{ item.href }}'>" id="{{ item.name }}">
+                <button onclick="myFunction('{{ item.name }}')">Copy text</button>
+            </div>
+    {% elif loop.index % 5 == 0 %}
+            <div class="endcell">
+                {% if item.dir == True %}
+                <a href="{{ item.href }}"> {{ item.name }}" </a><br>
+                {% else %}
+                {{ item.name }}
+                <a href="{{ item.href }}"> <img src="{{ item.href }}" alt="{{ item.name }}"> </a><br>
+                {% endif %}
+                <input class="in_text" type="text" value="<a href='{{ item.href }}'>" id="{{ item.name }}">
+                <button onclick="myFunction('{{ item.name }}')">Copy text</button>
+            </div>
+        </div>
+    {% else %}
+        <div class="cell">
+            {% if item.dir == True %}
+            <a href="{{ item.href }}"> {{ item.name }}" </a><br>
+            {% else %}
+            {{ item.name }}
+            <a href="{{ item.href }}"> <img src="{{ item.href }}" alt="{{ item.name }}"> </a><br>
+            {% endif %}
+            <input class="in_text" type="text" value="<a href='{{ item.href }}'>" id="{{ item.name }}">
+            <button onclick="myFunction('{{ item.name }}')">Copy text</button>
+        </div>
+    {% endif %}
+{%- endfor %}
+</body>
+</html>
